@@ -25,7 +25,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
             <section>
               <h3 className="font-semibold text-gray-900 mb-2">1. Acceptation des Conditions</h3>
               <p>
-                En utilisant EcomTroc, vous acceptez d'être lié par ces termes et conditions. Si vous n'acceptez pas ces
+                En utilisant EcomTroc, vous acceptez d&apos;être lié par ces termes et conditions. Si vous n&apos;acceptez pas ces
                 termes, veuillez ne pas utiliser notre service.
               </p>
             </section>
@@ -33,7 +33,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
             <section>
               <h3 className="font-semibold text-gray-900 mb-2">2. Description du Service</h3>
               <p>
-                EcomTroc est une plateforme de commerce électronique qui permet aux utilisateurs d'acheter, vendre et
+                EcomTroc est une plateforme de commerce électronique qui permet aux utilisateurs d&apos;acheter, vendre et
                 échanger des produits. Nous facilitons les transactions entre les utilisateurs mais ne sommes pas partie
                 aux contrats de vente.
               </p>
@@ -61,7 +61,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
               <h3 className="font-semibold text-gray-900 mb-2">5. Transactions et Paiements</h3>
               <p>
                 Les transactions entre utilisateurs sont régies par les termes convenus entre les parties. EcomTroc peut
-                faciliter les paiements mais n'est pas responsable des litiges entre acheteurs et vendeurs.
+                faciliter les paiements mais n&apos;est pas responsable des litiges entre acheteurs et vendeurs.
               </p>
             </section>
 
@@ -69,7 +69,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
               <h3 className="font-semibold text-gray-900 mb-2">6. Propriété Intellectuelle</h3>
               <p>
                 Le contenu de EcomTroc, y compris les textes, graphiques, logos et logiciels, est protégé par les droits
-                d'auteur et autres droits de propriété intellectuelle.
+                d&apos;auteur et autres droits de propriété intellectuelle.
               </p>
             </section>
 
@@ -77,7 +77,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
               <h3 className="font-semibold text-gray-900 mb-2">7. Limitation de Responsabilité</h3>
               <p>
                 EcomTroc ne sera pas responsable des dommages directs, indirects, accessoires ou consécutifs résultant
-                de l'utilisation de notre service.
+                de l&apos;utilisation de notre service.
               </p>
             </section>
 
@@ -100,7 +100,7 @@ export function TermsModal({ isOpen, onClose }: TermsModalProps) {
 
         <div className=" border-t bg-gray-50">
           <Button onClick={onClose} className="w-full bg-blue-600 hover:bg-blue-700">
-            J'ai lu et compris
+            J&apos;ai lu et compris
           </Button>
         </div>
       </div>
