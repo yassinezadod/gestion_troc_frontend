@@ -3,37 +3,40 @@ name: CI/CD - Next.js Build & Deploy
 on:
   push:
     branches:
-      - master
+      - master  # Branche que tu veux surveiller
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Récupérer le dépôt
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2️⃣ Installer Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
+      # 3️⃣ Installer les dépendances
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
+      # 4️⃣ Linter le projet
       - name: Run lint
         run: npm run lint
 
+      # 5️⃣ Build Next.js avec export statique
       - name: Build Next.js project
         run: npm run build
 
-      - name: Setup Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
+      # 6️⃣ Déployer sur GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
+        uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: .next/export   # ou le dossier exact configuré pour output: export
+          publish_dir: out  # Next.js export static: next.config.js -> output: 'export'
+          # user_name: "GitHub Actions" # optionnel
+          # user_email: "actions@github.com" # optionnel
