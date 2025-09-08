@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Logo from "@/components/ui/Logo"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -48,9 +49,7 @@ export default function LoginPage() {
             <Link href="/" className="text-gray-600 hover:text-gray-800">
               <ArrowLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-2xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-blue-700 to-blue-300 drop-shadow-[2px_2px_2px_rgba(0,0,0,0.4)] hover:scale-105 transition-transform duration-300">
-             EcomTroc
-            </h1>
+            <Logo />
 
           </div>
           <Link href="/register" className="text-blue-600 hover:text-blue-700 font-medium">

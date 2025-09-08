@@ -8,90 +8,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { CountrySelector, countries, type Country } from "@/components/country-selector"
+import { moroccanCities } from "@/data/moroccanCities"
+import Logo from "@/components/ui/Logo"
 
-const moroccanCities = [
-  "Casablanca",
-  "Rabat",
-  "Marrakech",
-  "Fes",
-  "Tangier",
-  "Agadir",
-  "Meknes",
-  "Oujda",
-  "Kenitra",
-  "Tetouan",
-  "Safi",
-  "Mohammedia",
-  "Khouribga",
-  "Beni Mellal",
-  "El Jadida",
-  "Taza",
-  "Nador",
-  "Settat",
-  "Larache",
-  "Ksar El Kebir",
-  "Khemisset",
-  "Guelmim",
-  "Berrechid",
-  "Wazzane",
-  "Ouarzazate",
-  "Tiznit",
-  "Taourirt",
-  "Berkane",
-  "Sidi Kacem",
-  "Sidi Slimane",
-  "Youssoufia",
-  "Jerada",
-  "Taounate",
-  "Erfoud",
-  "Azrou",
-  "Midelt",
-  "Ifrane",
-  "Imouzzer Kandar",
-  "Sefrou",
-  "Moulay Idriss",
-  "Chefchaouen",
-  "Al Hoceima",
-  "Martil",
-  "M'diq",
-  "Fnideq",
-  "Asilah",
-  "Essaouira",
-  "Taroudant",
-  "Inezgane",
-  "Ait Melloul",
-  "Biougra",
-  "Massa",
-  "Chtouka Ait Baha",
-  "Sidi Ifni",
-  "Tan-Tan",
-  "Laayoune",
-  "Dakhla",
-  "Boujdour",
-  "Smara",
-  "Aousserd",
-  "Oued Ed-Dahab",
-  "Bir Lehlou",
-  "Lagouira",
-  "Mahbes",
-  "Tichla",
-  "Bir Anzarane",
-  "Assa",
-  "Akka",
-  "Foum Zguid",
-  "Zagora",
-  "M'hamid El Ghizlane",
-  "Tagounite",
-  "Alnif",
-  "Rissani",
-  "Merzouga",
-  "Arfoud",
-  "Goulmima",
-  "Tinejdad",
-  "Errachidia",
-  "Boulemane",
 
-]
 
 export default function CompleteInfoPage() {
   const router = useRouter()
@@ -139,7 +59,7 @@ export default function CompleteInfoPage() {
             <Link href="/" className="text-gray-600 hover:text-gray-800">
               <ArrowLeft className="w-5 h-5" />
             </Link>
-            <h1 className="text-2xl font-bold text-blue-600 ml-85">EcomTroc</h1>
+            <Logo />
           </div>
           <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
             <ins> Sign in</ins>

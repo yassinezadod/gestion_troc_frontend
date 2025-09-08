@@ -1,0 +1,153 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "categories": "Catégories",
+    "about": "À propos",
+    "contact": "Contact",
+    "search_placeholder": "Rechercher des produits...",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "profile": "Profil",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "title": "Échangez vos objets facilement et gratuitement !",
+    "subtitle": "Publiez vos produits, découvrez les annonces, et troquez en toute simplicité avec la communauté EcomTroc.",
+    "viewListings": "Voir les annonces",
+    "startTrading": "Commencer à troquer",
+    "stats": {
+      "activeUsers": "Utilisateurs actifs",
+      "completedTrades": "Échanges réalisés",
+      "citiesCovered": "Villes couvertes"
+    }
+  },
+  "carousel": {
+    "title": "Catégories populaires",
+    "subtitle": "Explorez nos catégories les plus demandées et trouvez exactement ce que vous cherchez",
+    "electronics": {
+      "title": "Électronique & High-Tech",
+      "description": "Smartphones, ordinateurs, appareils photo et tous vos gadgets technologiques"
+    },
+    "furniture": {
+      "title": "Mobilier & Décoration",
+      "description": "Meubles vintage, décoration d'intérieur et objets pour embellir votre maison"
+    },
+    "sports": {
+      "title": "Sport & Loisirs",
+      "description": "Équipements sportifs, vélos, matériel de fitness et accessoires de loisirs"
+    },
+    "books": {
+      "title": "Livres & Éducation",
+      "description": "Livres, manuels scolaires, matériel éducatif et ressources d'apprentissage"
+    },
+    "previous": "Précédent",
+    "next": "Suivant",
+    "goToSlide": "Aller à la diapositive"
+  },
+  "features": {
+    "title": "Fonctionnalités clés",
+    "subtitle": "Tout ce dont vous avez besoin pour troquer facilement et en toute sécurité",
+    "addProduct": {
+      "title": "Ajouter un produit",
+      "description": "Publiez facilement vos objets à échanger en quelques clics"
+    },
+    "createListing": {
+      "title": "Créer une annonce",
+      "description": "Rédigez des annonces détaillées pour attirer les bons échanges"
+    },
+    "notifications": {
+      "title": "Recevoir des notifications",
+      "description": "Soyez alerté dès qu'une proposition d'échange vous est faite"
+    },
+    "whatsapp": {
+      "title": "Contacter via WhatsApp",
+      "description": "Communiquez directement avec les autres utilisateurs"
+    }
+  },
+  "recentListings": {
+    "title": "Annonces récentes",
+    "subtitle": "Découvrez les derniers objets proposés par notre communauté de troqueurs",
+    "viewListing": "Voir l'annonce",
+    "viewAllListings": "Voir toutes les annonces"
+  },
+  "categories": {
+    "electronics": "Électronique",
+    "sports": "Sport",
+    "furniture": "Mobilier",
+    "books": "Livres"
+  },
+  "footer": {
+    "description": "La plateforme de troc qui révolutionne les échanges au Maroc. Troquez vos objets facilement et contribuez à une économie circulaire.",
+    "usefulLinks": "Liens utiles",
+    "about": "À propos",
+    "listings": "Annonces",
+    "products": "Produits",
+    "contact": "Contact",
+    "legal": "Légal",
+    "terms": "CGU",
+    "privacy": "Confidentialité",
+    "help": "Centre d'aide",
+    "safety": "Sécurité",
+    "copyright": "© 2024 EcomTroc. Tous droits réservés."
+  },
+  "auth": {
+    "login": {
+      "title": "Connexion à votre compte",
+      "email": "Adresse email",
+      "email_placeholder": "Entrez votre adresse email",
+      "password": "Mot de passe",
+      "password_placeholder": "Entrez votre mot de passe (6+ caractères)",
+      "sign_in": "Se connecter",
+      "reset_password": "Mot de passe oublié",
+      "no_account": "Vous n'avez pas de compte ?",
+      "register_link": "S'inscrire"
+    },
+    "register": {
+      "title": "Créer votre compte",
+      "email": "Adresse email",
+      "email_placeholder": "Entrez votre adresse email",
+      "password": "Mot de passe",
+      "password_placeholder": "Entrez votre mot de passe (6+ caractères)",
+      "terms_agree": "J'accepte les",
+      "terms_link": "Conditions d'utilisation",
+      "register": "S'inscrire",
+      "reset_password": "Mot de passe oublié",
+      "have_account": "Vous avez déjà un compte ?",
+      "sign_in_link": "Se connecter"
+    },
+    "complete_info": {
+      "title": "Complétez vos informations",
+      "step_1": {
+        "title": "Informations personnelles",
+        "first_name": "Prénom",
+        "first_name_placeholder": "Entrez votre prénom",
+        "last_name": "Nom",
+        "last_name_placeholder": "Entrez votre nom",
+        "next": "Suivant"
+      },
+      "step_2": {
+        "title": "Informations de contact",
+        "phone": "Numéro de téléphone",
+        "city": "Ville",
+        "address": "Adresse",
+        "address_placeholder": "Entrez votre adresse",
+        "finish": "Terminer"
+      }
+    }
+  },
+
+   "categorie": {
+    "electronics": "Électronique",
+    "sports": "Sport",
+    "books": "Livres",
+    "fashion": "Mode & Vêtements",
+    "home_garden": "Maison & Jardin",
+    "vehicles": "Véhicules",
+    "kids": "Enfants & Bébés",
+    "beauty": "Beauté & Santé"
+  },
+  "language": {
+    "french": "Français",
+    "english": "English"
+  }
+}

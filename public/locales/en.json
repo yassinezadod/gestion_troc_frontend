@@ -1,0 +1,153 @@
+{
+  "navbar": {
+    "home": "Home",
+    "categories": "Categories",
+    "about": "About",
+    "contact": "Contact",
+    "search_placeholder": "Search products...",
+    "login": "Login",
+    "register": "Register",
+    "profile": "Profile",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Trade your items easily and for free!",
+    "subtitle": "Post your products, discover listings, and trade with ease in the EcomTroc community.",
+    "viewListings": "View listings",
+    "startTrading": "Start trading",
+    "stats": {
+      "activeUsers": "Active users",
+      "completedTrades": "Completed trades",
+      "citiesCovered": "Cities covered"
+    }
+  },
+  "carousel": {
+    "title": "Popular Categories",
+    "subtitle": "Explore our most requested categories and find exactly what you're looking for",
+    "electronics": {
+      "title": "Electronics & Tech",
+      "description": "Smartphones, computers, cameras and all your technological gadgets"
+    },
+    "furniture": {
+      "title": "Furniture & Decoration",
+      "description": "Vintage furniture, home decor and items to beautify your house"
+    },
+    "sports": {
+      "title": "Sports & Leisure",
+      "description": "Sports equipment, bikes, fitness gear and leisure accessories"
+    },
+    "books": {
+      "title": "Books & Education",
+      "description": "Books, textbooks, educational materials and learning resources"
+    },
+    "previous": "Previous",
+    "next": "Next",
+    "goToSlide": "Go to slide"
+  },
+  "features": {
+    "title": "Key Features",
+    "subtitle": "Everything you need to trade easily and securely",
+    "addProduct": {
+      "title": "Add a product",
+      "description": "Easily post your items for trade with just a few clicks"
+    },
+    "createListing": {
+      "title": "Create a listing",
+      "description": "Write detailed listings to attract the right trades"
+    },
+    "notifications": {
+      "title": "Receive notifications",
+      "description": "Get alerted as soon as a trade proposal is made to you"
+    },
+    "whatsapp": {
+      "title": "Contact via WhatsApp",
+      "description": "Communicate directly with other users"
+    }
+  },
+  "recentListings": {
+    "title": "Recent listings",
+    "subtitle": "Discover the latest items offered by our trading community",
+    "viewListing": "View listing",
+    "viewAllListings": "View all listings"
+  },
+  "categories": {
+    "electronics": "Electronics",
+    "sports": "Sports",
+    "furniture": "Furniture",
+    "books": "Books"
+  },
+  "footer": {
+    "description": "The trading platform that revolutionizes exchanges in Morocco. Trade your items easily and contribute to a circular economy.",
+    "usefulLinks": "Useful links",
+    "about": "About",
+    "listings": "Listings",
+    "products": "Products",
+    "contact": "Contact",
+    "legal": "Legal",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "help": "Help center",
+    "safety": "Safety",
+    "copyright": "© 2024 EcomTroc. All rights reserved."
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in to your account",
+      "email": "Email Address",
+      "email_placeholder": "Enter your email address",
+      "password": "Password",
+      "password_placeholder": "Enter password (6+ chars)",
+      "sign_in": "Sign in",
+      "reset_password": "Reset Password",
+      "no_account": "Don't have an account ?",
+      "register_link": "Register"
+    },
+    "register": {
+      "title": "Create you account",
+      "email": "Email Address",
+      "email_placeholder": "Enter your email address",
+      "password": "Password",
+      "password_placeholder": "Enter password (6+ chars)",
+      "terms_agree": "I agree to the",
+      "terms_link": "Terms and Conditions",
+      "register": "Register",
+      "reset_password": "Reset Password",
+      "have_account": "You already have an account ?",
+      "sign_in_link": "Sign in"
+    },
+    "complete_info": {
+      "title": "Enter your informations",
+      "step_1": {
+        "title": "Personal Information",
+        "first_name": "First Name",
+        "first_name_placeholder": "Enter your first name",
+        "last_name": "Last Name",
+        "last_name_placeholder": "Enter your last name",
+        "next": "Next"
+      },
+      "step_2": {
+        "title": "Contact Information",
+        "phone": "Phone Number",
+        "city": "City",
+        "address": "Address",
+        "address_placeholder": "Enter your address",
+        "finish": "Finish"
+      }
+    }
+  },
+
+  "categorie": {
+  "electronics": "Electronics",
+  "sports": "Sports",
+  "books": "Books",
+  "fashion": "Fashion & Clothing",
+  "home_garden": "Home & Garden",
+  "vehicles": "Vehicles",
+  "kids": "Kids & Babies",
+  "beauty": "Beauty & Health"
+},
+  "language": {
+    "french": "Français",
+    "english": "English"
+  }
+}
