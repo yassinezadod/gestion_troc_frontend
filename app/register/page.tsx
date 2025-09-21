@@ -1,39 +1,55 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { ArrowLeft } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
-import { TermsModal } from "@/components/terms-modal"
-import Logo from "@/components/ui/Logo"
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { TermsModal } from "@/components/terms-modal";
+import Logo from "@/components/ui/Logo";
+import { AuthService } from "@/services/auth"; // ✅ import service
 
 export default function RegisterPage() {
-  const router = useRouter()
-  const [showTermsModal, setShowTermsModal] = useState(false)
+  const router = useRouter();
+  const [showTermsModal, setShowTermsModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     agreeToTerms: false,
-  })
+  });
 
   const handleInputChange = (field: string, value: string | boolean) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-  const handleRegister = () => {
-    // Simulate user registration
-    console.log("User registered:", formData)
-    // Store user as registered but incomplete
-    localStorage.setItem("userRegistered", "true")
-    localStorage.setItem("userInfoComplete", "false")
-    localStorage.setItem("userEmail", formData.email)
-    // Redirect to complete information page
-    router.push("/complete-info")
-  }
+  const handleRegister = async () => {
+    setError(null);
+    setLoading(true);
+
+    try {
+      const res = await AuthService.register(formData.email, formData.password);
+
+      console.log("✅ Registered:", res);
+
+      // (optional) Save email for later usage
+      localStorage.setItem("userRegistered", "true");
+      localStorage.setItem("userEmail", formData.email);
+
+      // Redirect to complete info page
+      router.push("/complete-info");
+    } catch (err: any) {
+      console.error("❌ Registration error:", err);
+      setError(err.message || "Registration failed");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -43,9 +59,12 @@ export default function RegisterPage() {
             <Link href="/" className="text-gray-600 hover:text-gray-800">
               <ArrowLeft className="w-5 h-5" />
             </Link>
-             <Logo />
+            <Logo />
           </div>
-          <Link href="/login" className="text-blue-600 hover:text-blue-700 font-medium">
+          <Link
+            href="/login"
+            className="text-blue-600 hover:text-blue-700 font-medium"
+          >
             <ins>Sign in</ins>
           </Link>
         </div>
@@ -54,11 +73,16 @@ export default function RegisterPage() {
 
       <div className="max-w-md mx-auto pt-12 px-4">
         <div className="bg-white rounded-lg shadow-sm border p-8">
-          <h2 className="text-xl font-semibold text-center mb-8">Create you account</h2>
+          <h2 className="text-xl font-semibold text-center mb-8">
+            Create your account
+          </h2>
 
           <div className="space-y-6">
             <div>
-              <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-700"
+              >
                 Email Address
               </Label>
               <Input
@@ -72,7 +96,10 @@ export default function RegisterPage() {
             </div>
 
             <div>
-              <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-700"
+              >
                 Password
               </Label>
               <Input
@@ -89,7 +116,9 @@ export default function RegisterPage() {
               <Checkbox
                 id="terms"
                 checked={formData.agreeToTerms}
-                onCheckedChange={(checked) => handleInputChange("agreeToTerms", checked as boolean)}
+                onCheckedChange={(checked) =>
+                  handleInputChange("agreeToTerms", checked as boolean)
+                }
               />
               <Label htmlFor="terms" className="text-sm text-gray-600">
                 I agree to the{" "}
@@ -103,17 +132,27 @@ export default function RegisterPage() {
               </Label>
             </div>
 
+            {error && <p className="text-red-600 text-sm">{error}</p>}
+
             <Button
               onClick={handleRegister}
               className="w-full bg-blue-600 hover:bg-blue-500  active:bg-white active:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-              disabled={!formData.email || !formData.password || !formData.agreeToTerms}
+              disabled={
+                !formData.email ||
+                !formData.password ||
+                !formData.agreeToTerms ||
+                loading
+              }
             >
-              Register
+              {loading ? "Registering..." : "Register"}
             </Button>
 
             <div className="text-center">
-              <Link href="#" className="text-blue-600 hover:text-blue-700 text-sm">
-                 <ins> Reset Password</ins>
+              <Link
+                href="#"
+                className="text-blue-600 hover:text-blue-700 text-sm"
+              >
+                <ins> Reset Password</ins>
               </Link>
             </div>
           </div>
@@ -122,14 +161,17 @@ export default function RegisterPage() {
             <span className="text-sm text-gray-600">
               You already have an account ?{" "}
               <Link href="/login" className="text-blue-600 hover:text-blue-700">
-               <ins>Sign in</ins> 
+                <ins>Sign in</ins>
               </Link>
             </span>
           </div>
         </div>
       </div>
 
-      <TermsModal isOpen={showTermsModal} onClose={() => setShowTermsModal(false)} />
+      <TermsModal
+        isOpen={showTermsModal}
+        onClose={() => setShowTermsModal(false)}
+      />
     </div>
-  )
+  );
 }
