@@ -10,12 +10,16 @@ import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/Logo";
 import { AuthService } from "@/services/auth";
 
+type Notification = {
+  type: "success" | "error";
+  message: string;
+};
+
 export default function LoginPage() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<Notification | null>(null);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -24,43 +28,54 @@ export default function LoginPage() {
   const handleSignIn = async () => {
     if (!formData.email || !formData.password) return;
 
+    setLoading(true);
     try {
-      // Call login API
       const response = await AuthService.login(
         formData.email,
         formData.password
       );
 
-      // Log access token
-      console.log("Access Token:", response.accessToken);
-
-      // Save token locally for later API calls
+      // Sauvegarder token et statut
       localStorage.setItem("accessToken", response.accessToken);
-
-      // Mark user as logged in
+      console.log("Login successful, token:", response.accessToken);
       localStorage.setItem("userLoggedIn", "true");
       localStorage.setItem("userEmail", formData.email);
 
-      // Check if user has completed their information
-      const userInfoComplete = localStorage.getItem("userInfoComplete");
+      // Notification succés
+      setNotification({ type: "success", message: "Login successful!" });
 
-      if (userInfoComplete === "true") {
-        // User has complete info, redirect to dashboard/home
-        router.push("/");
-      } else {
-        // User needs to complete their information
-        localStorage.setItem("userRegistered", "true");
-        localStorage.setItem("userInfoComplete", "false");
-        router.push("/complete-info");
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Failed to login. Please check your credentials.");
+      // Redirection après 1s
+      setTimeout(() => {
+        const userInfoComplete = localStorage.getItem("userInfoComplete");
+        if (userInfoComplete === "true") router.push("/");
+        else router.push("/complete-info");
+      }, 1000);
+    } catch (err) {
+      console.error("Login failed:", err);
+      setNotification({
+        type: "error",
+        message: "Failed to login. Check your credentials.",
+      });
+    } finally {
+      setLoading(false);
+      // Supprimer notification après 3s
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 relative">
+      {/* Notification */}
+      {notification && (
+        <div
+          className={`absolute top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow text-white ${
+            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {notification.message}
+        </div>
+      )}
+
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -123,9 +138,9 @@ export default function LoginPage() {
             <Button
               onClick={handleSignIn}
               className="w-full bg-blue-600 hover:bg-blue-500 active:bg-white active:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-              disabled={!formData.email || !formData.password}
+              disabled={!formData.email || !formData.password || loading}
             >
-              Sign in
+              {loading ? "Signing in..." : "Sign in"}
             </Button>
 
             <div className="text-center">
@@ -140,7 +155,7 @@ export default function LoginPage() {
 
           <div className="text-center mt-6">
             <span className="text-sm text-gray-600">
-              Dont have an account ?{" "}
+              Dont have an account?{" "}
               <Link
                 href="/register"
                 className="text-blue-600 hover:text-blue-700"

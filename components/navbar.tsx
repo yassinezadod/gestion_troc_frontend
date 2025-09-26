@@ -27,9 +27,8 @@ export default function Navbar() {
   const handleLoginClick = () => {
     const userRegistered = localStorage.getItem("userRegistered")
     const userInfoCompleted = localStorage.getItem("userInfoCompleted")
-
     if (userRegistered && userInfoCompleted) router.push("/dashboard")
-    else if (userRegistered && !userInfoCompleted) router.push("/complete-info")
+    else if (userRegistered && !userInfoCompleted) router.push("/login")
     else router.push("/login")
   }
 

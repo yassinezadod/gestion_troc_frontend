@@ -12,11 +12,17 @@ import { TermsModal } from "@/components/terms-modal";
 import Logo from "@/components/ui/Logo";
 import { AuthService } from "@/services/auth"; // ✅ import service
 
+type Notification = {
+  type: "success" | "error";
+  message: string;
+};
+
 export default function RegisterPage() {
   const router = useRouter();
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [notification, setNotification] = useState<Notification | null>(null)
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,30 +35,58 @@ export default function RegisterPage() {
   };
 
   const handleRegister = async () => {
-    setError(null);
-    setLoading(true);
+  setError(null);
+  setLoading(true);
 
-    try {
-      const res = await AuthService.register(formData.email, formData.password);
+  try {
+    const res = await AuthService.register(formData.email, formData.password);
 
-      console.log("✅ Registered:", res);
+    console.log("✅ Registered:", res);
 
-      // (optional) Save email for later usage
-      localStorage.setItem("userRegistered", "true");
-      localStorage.setItem("userEmail", formData.email);
+    // (optional) Save email for later usage
+    localStorage.setItem("userRegistered", "true");
+    localStorage.setItem("userEmail", formData.email);
 
-      // Redirect to complete info page
-      router.push("/complete-info");
-    } catch (err: any) {
-      console.error("❌ Registration error:", err);
-      setError(err.message || "Registration failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    // Afficher notification succès
+    setNotification({ type: "success", message: "Registration successful!" });
+
+
+    // Redirection après 2 secondes
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+
+  } catch (err: unknown) {
+  if (err instanceof Error) {
+    console.error("❌ Registration error:", err.message);
+    setError(err.message);
+    setNotification({ type: "error", message: err.message });
+  } else {
+    console.error("❌ Registration error:", err);
+    setError("Registration failed");
+    setNotification({ type: "error", message: "Registration failed" });
+  }
+} finally {
+    setLoading(false);
+
+     // Supprimer la notification après 3 secondes
+      setTimeout(() => setNotification(null), 3000);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-50">
+        {/* Notification */}
+      {notification && (
+        <div
+          className={`absolute top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow text-white ${
+            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {notification.message}
+        </div>
+      )}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
