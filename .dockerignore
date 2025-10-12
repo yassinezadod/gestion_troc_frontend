@@ -1,0 +1,21 @@
+# Node
+node_modules
+npm-debug.log
+yarn.lock
+
+# Next.js build
+.next
+out
+
+# Tests / temp
+__tests__
+coverage
+*.log
+
+# Git
+.git
+.gitignore
+
+# IDE / OS
+.vscode
+.DS_Store
