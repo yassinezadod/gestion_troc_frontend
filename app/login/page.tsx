@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
@@ -9,9 +9,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Logo from "@/components/ui/Logo";
 import { AuthService } from "@/services/auth";
+import { handleLoginResponse } from "@/helpers/auth/handleResponseAuth";
 
 type Notification = {
-  type: "success" | "error";
+  type: "success" | "error" | "warning";
   message: string;
 };
 
@@ -21,45 +22,49 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [notification, setNotification] = useState<Notification | null>(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token) {
+      setNotification({
+        type: "warning",
+        message: "You are already logged in!",
+      });
+      setTimeout(() => router.replace("/"), 1000);
+    } else {
+      setNotification({
+        type: "error",
+        message: "No active session found. Please log in.",
+      });
+      setTimeout(() => setNotification(null), 3000);
+    }
+  }, [router]);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSignIn = async () => {
     if (!formData.email || !formData.password) return;
-
     setLoading(true);
+
     try {
       const response = await AuthService.login(
         formData.email,
         formData.password
       );
-
-      // Sauvegarder token et statut
-      localStorage.setItem("accessToken", response.accessToken);
-      console.log("Login successful, token:", response.accessToken);
-      localStorage.setItem("userLoggedIn", "true");
-      localStorage.setItem("userEmail", formData.email);
-
-      // Notification succés
-      setNotification({ type: "success", message: "Login successful!" });
-
-      // Redirection après 1s
-      setTimeout(() => {
-        const userInfoComplete = localStorage.getItem("userInfoComplete");
-        if (userInfoComplete === "true") router.push("/");
-        else router.push("/complete-info");
-      }, 1000);
-    } catch (err) {
+      console.log("Redirecting to:", response.redirect);
+      console.log("Router instance:", router);
+      handleLoginResponse(response, router, setNotification);
+    } catch (err: any) {
       console.error("Login failed:", err);
       setNotification({
         type: "error",
-        message: "Failed to login. Check your credentials.",
+        message: err?.message || "Failed to login. Check your credentials.",
       });
     } finally {
       setLoading(false);
-      // Supprimer notification après 3s
-      setTimeout(() => setNotification(null), 3000);
+      setTimeout(() => setNotification(null), 4000);
     }
   };
 
@@ -69,13 +74,18 @@ export default function LoginPage() {
       {notification && (
         <div
           className={`absolute top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded shadow text-white ${
-            notification.type === "success" ? "bg-green-500" : "bg-red-500"
+            notification.type === "success"
+              ? "bg-green-500"
+              : notification.type === "warning"
+              ? "bg-orange-500"
+              : "bg-red-500"
           }`}
         >
           {notification.message}
         </div>
       )}
 
+      {/* Header */}
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
@@ -94,6 +104,7 @@ export default function LoginPage() {
         <div className="border-b-2 border-blue-600"></div>
       </div>
 
+      {/* Form */}
       <div className="max-w-md mx-auto pt-12 px-4">
         <div className="bg-white rounded-lg shadow-sm border p-8">
           <h2 className="text-xl font-semibold text-center mb-8">
@@ -111,7 +122,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="Enter your email address"
+                placeholder="Enter your email"
                 value={formData.email}
                 onChange={(e) => handleInputChange("email", e.target.value)}
                 className="mt-1"
@@ -155,7 +166,7 @@ export default function LoginPage() {
 
           <div className="text-center mt-6">
             <span className="text-sm text-gray-600">
-              Dont have an account?{" "}
+              Don't have an account?
               <Link
                 href="/register"
                 className="text-blue-600 hover:text-blue-700"

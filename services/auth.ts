@@ -1,4 +1,13 @@
+// /services/auth.ts
 import { apiClient } from "@/lib/apiClient";
+
+export type LoginResponse = {
+  message?: string;
+  redirect?: string;
+  type?: string;
+  accessToken?: string;
+  refreshToken?: string;
+};
 
 export const AuthService = {
   register: (email: string, password: string) =>
@@ -8,7 +17,7 @@ export const AuthService = {
     }),
 
   login: (email: string, password: string) =>
-    apiClient<{ accessToken: string }>("/auth/login", {
+    apiClient<LoginResponse>("/auth/login", {
       method: "POST",
       body: JSON.stringify({ email, password }),
     }),
@@ -35,7 +44,7 @@ export const AuthService = {
     address?: string;
   }) =>
     apiClient<{ message?: string }>("/user/me", {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify(data),
     }),
 };

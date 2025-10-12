@@ -19,7 +19,7 @@ import { AuthService } from "@/services/auth";
 export default function CompleteInfoPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]); // Morocco as default
+  const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -27,11 +27,17 @@ export default function CompleteInfoPage() {
     city: "Casablanca",
     address: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
+  // ✅ Check user is logged in but info incomplete
   useEffect(() => {
-    const userRegistered = localStorage.getItem("userRegistered");
-    if (!userRegistered) {
-      router.push("/register");
+    const accessToken = localStorage.getItem("accessToken");
+    const infoComplete = localStorage.getItem("userInfoComplete");
+    if (!accessToken) {
+      router.push("/login");
+    } else if (infoComplete === "true") {
+      router.push("/"); // Already completed
     }
   }, [router]);
 
@@ -48,6 +54,11 @@ export default function CompleteInfoPage() {
   };
 
   const handleFinish = async () => {
+    if (!formData.phone || !formData.address) return;
+
+    setLoading(true);
+    setError("");
+
     try {
       await AuthService.updateMe({
         firstName: formData.firstName,
@@ -58,19 +69,13 @@ export default function CompleteInfoPage() {
         address: formData.address,
       });
 
-      console.log({
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        phoneCode: selectedCountry.code,
-        phoneNumber: formData.phone,
-        city: formData.city,
-        address: formData.address,
-      });
-
       localStorage.setItem("userInfoComplete", "true");
-      router.push("/");
-    } catch (error) {
-      console.error("Failed to update user info", error);
+      router.push("/"); // Redirect after completing info
+    } catch (err: any) {
+      console.error("Failed to update user info", err);
+      setError(err.message || "Failed to update information");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -79,16 +84,13 @@ export default function CompleteInfoPage() {
       <div className="bg-white border-b">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            <Link href="/" className="text-gray-600 hover:text-gray-800">
-              <ArrowLeft className="w-5 h-5" />
-            </Link>
             <Logo />
           </div>
           <Link
             href="/login"
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
-            <ins> Sign in</ins>
+            <ins>Sign in</ins>
           </Link>
         </div>
         <div className="border-b-2 border-blue-600"></div>
@@ -96,28 +98,20 @@ export default function CompleteInfoPage() {
 
       <div className="max-w-md mx-auto pt-12 px-4">
         <div className="bg-white rounded-lg shadow-sm border p-8">
+          {error && (
+            <div className="mb-4 text-red-600 font-medium text-center">
+              {error}
+            </div>
+          )}
+
           {step === 1 && (
             <>
-              <div className="flex items-center mb-6">
-                <button
-                  onClick={() => router.back()}
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <h2 className="text-xl font-semibold ml-4">
-                  Enter your informations
-                </h2>
-              </div>
-
+              <h2 className="text-xl font-semibold mb-6">
+                Personal Information
+              </h2>
               <div className="space-y-6">
                 <div>
-                  <Label
-                    htmlFor="firstName"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    First Name
-                  </Label>
+                  <Label htmlFor="firstName">First Name</Label>
                   <Input
                     id="firstName"
                     placeholder="Enter your first name"
@@ -130,12 +124,7 @@ export default function CompleteInfoPage() {
                 </div>
 
                 <div>
-                  <Label
-                    htmlFor="lastName"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Last Name
-                  </Label>
+                  <Label htmlFor="lastName">Last Name</Label>
                   <Input
                     id="lastName"
                     placeholder="Enter your last name"
@@ -149,8 +138,8 @@ export default function CompleteInfoPage() {
 
                 <Button
                   onClick={handleNext}
-                  className="w-full bg-blue-600 hover:bg-blue-500  active:bg-white active:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
                   disabled={!formData.firstName || !formData.lastName}
+                  className="w-full bg-blue-600 hover:bg-blue-500"
                 >
                   Next
                 </Button>
@@ -160,26 +149,13 @@ export default function CompleteInfoPage() {
 
           {step === 2 && (
             <>
-              <div className="flex items-center mb-6">
-                <button
-                  onClick={handleBack}
-                  className="text-gray-600 hover:text-gray-800"
-                >
-                  <ArrowLeft className="w-5 h-5" />
-                </button>
-                <h2 className="text-xl font-semibold ml-4">
-                  Enter your informations
-                </h2>
-              </div>
+              <h2 className="text-xl font-semibold mb-6">
+                Contact Information
+              </h2>
 
               <div className="space-y-6">
                 <div>
-                  <Label
-                    htmlFor="phone"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Phone Number
-                  </Label>
+                  <Label htmlFor="phone">Phone Number</Label>
                   <div className="flex mt-1">
                     <CountrySelector
                       selectedCountry={selectedCountry}
@@ -198,17 +174,12 @@ export default function CompleteInfoPage() {
                 </div>
 
                 <div>
-                  <Label
-                    htmlFor="city"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    City
-                  </Label>
+                  <Label htmlFor="city">City</Label>
                   <select
                     id="city"
                     value={formData.city}
                     onChange={(e) => handleInputChange("city", e.target.value)}
-                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-md"
                   >
                     {moroccanCities.map((city) => (
                       <option key={city} value={city}>
@@ -219,12 +190,7 @@ export default function CompleteInfoPage() {
                 </div>
 
                 <div>
-                  <Label
-                    htmlFor="address"
-                    className="text-sm font-medium text-gray-700"
-                  >
-                    Address
-                  </Label>
+                  <Label htmlFor="address">Address</Label>
                   <Input
                     id="address"
                     placeholder="Enter your address"
@@ -238,12 +204,19 @@ export default function CompleteInfoPage() {
 
                 <Button
                   onClick={handleFinish}
-                  className="w-full bg-blue-600 hover:bg-blue-500  active:bg-white active:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                  disabled={!formData.phone || !formData.address}
+                  disabled={loading || !formData.phone || !formData.address}
+                  className="w-full bg-blue-600 hover:bg-blue-500"
                 >
-                  Finish
+                  {loading ? "Saving..." : "Finish"}
                 </Button>
               </div>
+
+              <Button
+                onClick={handleBack}
+                className="mt-4 w-full border border-gray-300"
+              >
+                Back
+              </Button>
             </>
           )}
         </div>
